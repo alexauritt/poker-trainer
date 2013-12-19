@@ -6,8 +6,13 @@ describe 'intialization' do
 		card.valid?.should be_true
 	end
 
-	it 'should be valid with bad value param' do
-		card = Card.new(20, :clubs)
+	it 'should be invalid with bad value param' do
+		card = Card.new(15, :clubs)
+		card.valid?.should be_false
+	end
+
+	it 'should be invalid with bad suit' do
+		card = Card.new(10, :clubbbs)
 		card.valid?.should be_false
 	end
 
