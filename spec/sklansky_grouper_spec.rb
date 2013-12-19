@@ -88,4 +88,21 @@ describe "group_number" do
 			SklanskyGrouper.group_number(c1, c2).should eq(7)
 		end
 	end
+
+	describe 'is_suited?' do
+		it 'should identify suited pair' do
+			c1 = Card.new(2, :clubs)
+			c2 = Card.new(3, :clubs)		
+			SklanskyGrouper.is_suited?(c1, c2).should be_true
+		end
+
+		it 'should identify non suited pair' do
+			c1 = Card.new(2, :clubs)
+			c2 = Card.new(3, :diamonds)		
+			SklanskyGrouper.is_suited?(c1, c2).should be_false
+		end
+
+
+	end
+
 end

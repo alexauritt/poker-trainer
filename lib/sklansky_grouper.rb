@@ -12,6 +12,10 @@ class SklanskyGrouper
 		c1.value == c2.value
 	end
 
+	def self.is_suited?(c1, c2)
+		c1.suit == c2.suit
+	end
+
 	def self.pair_rating(card_value)
 		case card_value
 			when :ace, :king, :queen, :jack
