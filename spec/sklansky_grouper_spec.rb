@@ -101,8 +101,112 @@ describe "group_number" do
 			c2 = Card.new(3, :diamonds)		
 			SklanskyGrouper.is_suited?(c1, c2).should be_false
 		end
+	end
 
+	describe 'distance' do
+		it 'should identify standard digit card connectors' do
+			c1 = Card.new(2, :clubs)
+			c2 = Card.new(3, :diamonds)		
+			SklanskyGrouper.distance(c1, c2).should eq(1)
+		end
+
+		it 'should identify wider spread digit cards' do
+			c1 = Card.new(2, :clubs)
+			c2 = Card.new(8, :diamonds)		
+			SklanskyGrouper.distance(c1, c2).should eq(6)
+		end
+
+		it 'should identify wider spread digit cards reversed' do
+			c1 = Card.new(2, :clubs)
+			c2 = Card.new(8, :diamonds)		
+			SklanskyGrouper.distance(c2, c1).should eq(6)
+		end
+
+		it 'should be 0 for same values' do
+			c1 = Card.new(:ace, :clubs)
+			c2 = Card.new(:ace, :diamonds)		
+			SklanskyGrouper.distance(c1, c2).should eq(0)
+		end
+
+		it 'should be 1 for ace and king' do
+			c1 = Card.new(:ace, :clubs)
+			c2 = Card.new(:king, :diamonds)		
+			SklanskyGrouper.distance(c1, c2).should eq(1)
+		end
+
+		it 'should be 1 for ace and king, reversed' do
+			c1 = Card.new(:ace, :clubs)
+			c2 = Card.new(:king, :diamonds)		
+			SklanskyGrouper.distance(c2, c1).should eq(1)
+		end
+
+		it 'should be 1 for ace and two' do
+			c1 = Card.new(:ace, :clubs)
+			c2 = Card.new(2, :diamonds)		
+			SklanskyGrouper.distance(c1, c2).should eq(1)
+		end
+
+		it 'should be 1 for ace and two, reversed' do
+			c1 = Card.new(:ace, :clubs)
+			c2 = Card.new(2, :diamonds)		
+			SklanskyGrouper.distance(c2, c1).should eq(1)
+		end
+
+		it 'should be 6 for ace and seven' do
+			c1 = Card.new(:ace, :clubs)
+			c2 = Card.new(7, :diamonds)		
+			SklanskyGrouper.distance(c2, c1).should eq(6)
+		end
+
+		it 'should be 6 for ace and seven, reversed' do
+			c1 = Card.new(:ace, :clubs)
+			c2 = Card.new(7, :diamonds)		
+			SklanskyGrouper.distance(c1, c2).should eq(6)
+		end		
+
+		it 'should be 6 for ace and eight' do
+			c1 = Card.new(:ace, :clubs)
+			c2 = Card.new(8, :diamonds)		
+			SklanskyGrouper.distance(c2, c1).should eq(6)
+		end
+
+		it 'should be 1 for ace and eight, reversed' do
+			c1 = Card.new(:ace, :clubs)
+			c2 = Card.new(8, :diamonds)		
+			SklanskyGrouper.distance(c1, c2).should eq(6)
+		end		
 
 	end
 
+	describe 'connectors?' do
+		it 'should identify standard digit card connectors' do
+			c1 = Card.new(7, :clubs)
+			c2 = Card.new(8, :diamonds)		
+			SklanskyGrouper.connectors?(c1, c2).should be_true
+		end
+		
+		it 'should identify standard digit card non connectors' do
+			c1 = Card.new(4, :clubs)
+			c2 = Card.new(8, :diamonds)		
+			SklanskyGrouper.connectors?(c1, c2).should be_false
+		end
+		
+		it 'should identify standard face card connectors' do
+			c1 = Card.new(:king, :clubs)
+			c2 = Card.new(:ace, :diamonds)		
+			SklanskyGrouper.connectors?(c1, c2).should be_true
+		end
+
+		it 'should identify standard face card non connectors' do
+			c1 = Card.new(:ace, :clubs)
+			c2 = Card.new(:jack, :diamonds)		
+			SklanskyGrouper.connectors?(c1, c2).should be_false
+		end		
+
+		it 'should identify jack 10 connectors' do
+			c1 = Card.new(10, :clubs)
+			c2 = Card.new(:jack, :diamonds)		
+			SklanskyGrouper.connectors?(c1, c2).should be_true
+		end		
+	end
 end

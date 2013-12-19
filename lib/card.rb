@@ -1,12 +1,13 @@
 class Card
-	attr_accessor :suit, :value
+	attr_accessor :suit
+	attr_reader :value
 
 	SUITS = [:hearts, :clubs, :diamonds, :spades]
 	VALUE_NAMES = [:ace, :king, :queen, :jack]
 	
 	def initialize(value, suit)
 		@suit = suit
-		@value = value
+		self.value = value
 	end
 
 	def valid?
@@ -20,12 +21,23 @@ class Card
 			is_suit_valid = false
 		end
 
-		if value.is_a? Symbol
-			is_value_valid = VALUE_NAMES.include? value
-		else
-			is_value_valid = (value < 15) 
-		end
+		is_suit_valid and value < 15
+	end
 
-		is_suit_valid and is_value_valid
+	def value=(value)
+		if value.is_a? Symbol
+			case value
+			when :ace
+				@value = 14
+			when :king
+				@value = 13
+			when :queen
+				@value = 12
+			when :jack
+				@value = 11
+			end
+		else
+			@value = value
+		end
 	end
 end
