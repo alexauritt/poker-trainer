@@ -48,6 +48,8 @@ class SklanskyGrouper
 		
 		higher_value = card1.value > card2.value ? card1.value : card2.value
 		lower_value = card1.value < card2.value ? card1.value : card2.value
+
+		# suited aces (non connectors)
 		if higher_value == 14
 			case lower_value
 			when 12, 11
@@ -56,6 +58,15 @@ class SklanskyGrouper
 				return 3
 			else
 				return 5
+			end
+		elsif higher_value == 13
+			case lower_value
+			when 11
+				return 3
+			when 10
+				return 4
+			else
+				return 7
 			end
 		end
 		20

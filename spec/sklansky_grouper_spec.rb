@@ -36,6 +36,34 @@ describe "group_number" do
 				SklanskyGrouper.group_number(c1, c2).should eq(5)
 			end						
 		end
+
+		context 'kings' do
+			it 'should group kj suited' do
+				c1 = Card.new(:king, :clubs)
+				c2 = Card.new(:jack, :clubs)		
+				SklanskyGrouper.group_number(c1, c2).should eq(3)
+			end
+			it 'should group k 10 suited' do
+				c1 = Card.new(:king, :clubs)
+				c2 = Card.new(10, :clubs)		
+				SklanskyGrouper.group_number(c1, c2).should eq(4)
+			end
+			it 'should group k 9 suited' do
+				c1 = Card.new(9, :clubs)
+				c2 = Card.new(:king, :clubs)		
+				SklanskyGrouper.group_number(c1, c2).should eq(7)
+			end
+			it 'should group k 3 suited' do
+				c1 = Card.new(3, :diamonds)		
+				c2 = Card.new(:king, :diamonds)
+				SklanskyGrouper.group_number(c1, c2).should eq(7)
+			end
+			it 'should group k 2 suited' do
+				c1 = Card.new(:king, :clubs)
+				c2 = Card.new(2, :clubs)		
+				SklanskyGrouper.group_number(c1, c2).should eq(7)
+			end						
+		end		
 	end
 
 	context 'suited connectors' do
