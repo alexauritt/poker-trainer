@@ -64,8 +64,20 @@ describe "group_number" do
 				SklanskyGrouper.group_number(c1, c2).should eq(7)
 			end						
 		end		
+
+		context 'queens' do
+			pending 'must do suited queens, jacks, and on down'
+		end
 	end
 
+	context 'connectors' do
+		pending 'must do all non suited connectors'	
+	end
+
+	context 'remaining non suited non connectors' do
+		pending 'the riff raff'
+	end
+	
 	context 'suited connectors' do
 		it 'should group ak suited' do
 			c1 = Card.new(:ace, :clubs)
