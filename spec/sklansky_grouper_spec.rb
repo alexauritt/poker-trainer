@@ -8,8 +8,27 @@ describe "group_number" do
 		SklanskyGrouper.group_number(c1, c2).should be_nil
 	end
 
-	context "pairs" do
+	context 'suited connectors' do
+		it 'should group ak suited' do
+			c1 = Card.new(:ace, :clubs)
+			c2 = Card.new(:king, :clubs)		
+			SklanskyGrouper.group_number(c1, c2).should eq(1)
+		end
 
+		it 'should group kq suited' do
+			c1 = Card.new(:queen, :clubs)
+			c2 = Card.new(:king, :clubs)		
+			SklanskyGrouper.group_number(c1, c2).should eq(2)
+		end
+
+		it 'should group kq suited' do
+			c1 = Card.new(:ace, :clubs)
+			c2 = Card.new(2, :clubs)		
+			SklanskyGrouper.group_number(c1, c2).should eq(5)
+		end		
+	end
+	
+	context "pairs" do
 		it 'should group ace pairs correctly' do
 			c1 = Card.new(:ace, :clubs)
 			c2 = Card.new(:ace, :spades)		
