@@ -5,13 +5,14 @@ class SklanskyGrouper
 			pair_rating(card1.value)
 		elsif is_suited_connector?(card1, card2)
 			suited_connector_rating(card1, card2)
-		else 
+		elsif is_suited?(card1, card2)
+			suited_rating(card1, card2)
+		else
 			nil
 		end
 	end
 
-	# pair helpers
-
+	# pair helpers -- should be abstracted to module
 	def self.is_suited_connector?(c1, c2)
 		is_suited?(c1, c2) and connectors?(c1, c2)
 	end
@@ -41,7 +42,24 @@ class SklanskyGrouper
 		alt_difference < standard_distance ? alt_difference : standard_distance
 	end
 
-	# rating mappers
+	# rating mappers -- private
+	def self.suited_rating(card1, card2)
+		return suited_connector_rating(card1, card2) if connectors?(card1, card2)
+		
+		higher_value = card1.value > card2.value ? card1.value : card2.value
+		lower_value = card1.value < card2.value ? card1.value : card2.value
+		if higher_value == 14
+			case lower_value
+			when 12, 11
+				return 2
+			when 10
+				return 3
+			else
+				return 5
+			end
+		end
+		20
+	end
 
 	def self.suited_connector_rating(card1, card2)
 		higher_value = card1.value > card2.value ? card1.value : card2.value
