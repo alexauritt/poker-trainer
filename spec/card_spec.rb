@@ -2,6 +2,11 @@ require 'card'
 
 describe 'initialization' do
 	context 'value convertion' do
+
+		it 'should fail' do
+			32.should eq(33)
+		end
+
 		it 'should convent king symbol to value 13' do
 			card = Card.new(:king, :clubs)
 			card.value.should eq(13)
